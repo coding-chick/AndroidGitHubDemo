@@ -1,10 +1,12 @@
 package net.codingchick.androidgithubdemo.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Efrat Barak on 4/19/2015.
  */
-public class Owner
-{
+public class Owner implements Parcelable {
     private String login;
 
     public String getLogin() { return this.login; }
@@ -106,4 +108,63 @@ public class Owner
     public boolean getSiteAdmin() { return this.site_admin; }
 
     public void setSiteAdmin(boolean site_admin) { this.site_admin = site_admin; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.login);
+        dest.writeInt(this.id);
+        dest.writeString(this.avatar_url);
+        dest.writeString(this.gravatar_id);
+        dest.writeString(this.url);
+        dest.writeString(this.html_url);
+        dest.writeString(this.followers_url);
+        dest.writeString(this.following_url);
+        dest.writeString(this.gists_url);
+        dest.writeString(this.starred_url);
+        dest.writeString(this.subscriptions_url);
+        dest.writeString(this.organizations_url);
+        dest.writeString(this.repos_url);
+        dest.writeString(this.events_url);
+        dest.writeString(this.received_events_url);
+        dest.writeString(this.type);
+        dest.writeByte(site_admin ? (byte) 1 : (byte) 0);
+    }
+
+    public Owner() {
+    }
+
+    private Owner(Parcel in) {
+        this.login = in.readString();
+        this.id = in.readInt();
+        this.avatar_url = in.readString();
+        this.gravatar_id = in.readString();
+        this.url = in.readString();
+        this.html_url = in.readString();
+        this.followers_url = in.readString();
+        this.following_url = in.readString();
+        this.gists_url = in.readString();
+        this.starred_url = in.readString();
+        this.subscriptions_url = in.readString();
+        this.organizations_url = in.readString();
+        this.repos_url = in.readString();
+        this.events_url = in.readString();
+        this.received_events_url = in.readString();
+        this.type = in.readString();
+        this.site_admin = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<Owner> CREATOR = new Parcelable.Creator<Owner>() {
+        public Owner createFromParcel(Parcel source) {
+            return new Owner(source);
+        }
+
+        public Owner[] newArray(int size) {
+            return new Owner[size];
+        }
+    };
 }

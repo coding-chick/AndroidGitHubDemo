@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activities.GitHubSearchActivity"
+            android:name=".views.activities.GitHubSearchActivity"
             android:label="@string/search_github" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
