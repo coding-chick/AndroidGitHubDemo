@@ -3,21 +3,17 @@ package net.codingchick.androidgithubdemo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Efrat Barak on 4/19/2015.
  */
-public class Owner implements Parcelable {
+public class Owner extends SugarRecord<Owner> implements Parcelable {
     private String login;
 
     public String getLogin() { return this.login; }
 
     public void setLogin(String login) { this.login = login; }
-
-    private int id;
-
-    public int getId() { return this.id; }
-
-    public void setId(int id) { this.id = id; }
 
     private String avatar_url;
 
@@ -117,7 +113,7 @@ public class Owner implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.login);
-        dest.writeInt(this.id);
+        dest.writeLong(this.id);
         dest.writeString(this.avatar_url);
         dest.writeString(this.gravatar_id);
         dest.writeString(this.url);
@@ -140,7 +136,7 @@ public class Owner implements Parcelable {
 
     private Owner(Parcel in) {
         this.login = in.readString();
-        this.id = in.readInt();
+        this.id = in.readLong();
         this.avatar_url = in.readString();
         this.gravatar_id = in.readString();
         this.url = in.readString();

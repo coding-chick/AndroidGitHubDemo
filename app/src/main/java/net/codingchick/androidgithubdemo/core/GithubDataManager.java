@@ -3,6 +3,7 @@ package net.codingchick.androidgithubdemo.core;
 import android.os.AsyncTask;
 
 import net.codingchick.androidgithubdemo.model.Repo;
+import net.codingchick.androidgithubdemo.model.RootObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,27 @@ public class GithubDataManager {
         new AsyncTask<String, Void, ArrayList<Repo>>() {
             @Override
             protected ArrayList<Repo> doInBackground(String... params) {
-                return githubService.searchRepos(params[0]).getItems();
+                String searchQuery = params[0];
+                RootObject reposResult = githubService.searchRepos(searchQuery);
+
+                //if (reposResult != null) {
+                    reposResult.setSearchQuery(searchQuery);
+
+                    new AsyncTask<RootObject, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(RootObject... params) {
+                            params[0].save();
+                            return null;
+                        }
+                    }.execute(reposResult);
+               // }
+               // else{
+                    List<RootObject> prevSearches = RootObject.find(RootObject.class, "search_query = ?", searchQuery);
+                    if (prevSearches.size() > 0){
+                        prevSearches.get(0).getItems();
+                    }
+               // }
+                return reposResult.getItems();
             }
 
             @Override

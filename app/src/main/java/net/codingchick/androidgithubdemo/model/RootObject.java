@@ -1,10 +1,17 @@
 package net.codingchick.androidgithubdemo.model;
 
+
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RootObject
+public class RootObject extends SugarRecord<RootObject>
 {
+    public RootObject(){
+    }
+
     private int total_count;
 
     public int getTotalCount() { return this.total_count; }
@@ -22,4 +29,14 @@ public class RootObject
     public ArrayList<Repo> getItems() { return this.items; }
 
     public void setItems(ArrayList<Repo> items) { this.items = items; }
+
+    private String searchQuery;
+
+    public String getSearchQuery() {
+        return searchQuery;
+    }
+
+    public void setSearchQuery(String searchQuery) {
+        this.searchQuery = searchQuery;
+    }
 }

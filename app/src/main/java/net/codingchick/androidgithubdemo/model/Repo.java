@@ -3,16 +3,12 @@ package net.codingchick.androidgithubdemo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.orm.SugarRecord;
+
 import java.util.Date;
 
-public class Repo implements Parcelable
+public class Repo extends SugarRecord<Repo> implements Parcelable
 {
-    private int id;
-
-    public int getId() { return this.id; }
-
-    public void setId(int id) { this.id = id; }
-
     private String name;
 
     public String getName() { return this.name; }
@@ -417,7 +413,7 @@ public class Repo implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
+        dest.writeLong(this.id);
         dest.writeString(this.name);
         dest.writeString(this.full_name);
         dest.writeParcelable(this.owner, flags);
@@ -490,7 +486,7 @@ public class Repo implements Parcelable
     }
 
     private Repo(Parcel in) {
-        this.id = in.readInt();
+        this.id = in.readLong();
         this.name = in.readString();
         this.full_name = in.readString();
         this.owner = in.readParcelable(Owner.class.getClassLoader());
