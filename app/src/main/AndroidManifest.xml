@@ -12,7 +12,7 @@
 
         <activity
             android:name=".views.activities.GitHubSearchActivity"
-            android:label="@string/search_github" >
+            android:label="@string/search_github">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

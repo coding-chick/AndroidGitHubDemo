@@ -77,8 +77,11 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
         repoListLayoutManager = new LinearLayoutManager(this.getActivity());
         repoRecyclerView.setLayoutManager(repoListLayoutManager);
 
+        getActivity().getActionBar().show();
         return view;
     }
+
+
 
     public static GitHubSearchFragment newInstance(){
         return new GitHubSearchFragment();

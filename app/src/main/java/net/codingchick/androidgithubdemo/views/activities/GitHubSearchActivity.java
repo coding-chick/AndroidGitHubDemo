@@ -31,4 +31,10 @@ public class GitHubSearchActivity extends Activity implements GitHubSearchFragme
                 .addToBackStack("toDetails")
         .commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        getActionBar().show();
+    }
 }
