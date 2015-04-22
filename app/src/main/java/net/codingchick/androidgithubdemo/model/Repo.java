@@ -428,6 +428,11 @@ public class Repo extends SugarRecord<Repo> implements Parcelable
 
     public void setScore(double score) { this.score = score; }
 
+    public Repo() {
+        created_at = new Date();
+        updated_at = new Date();
+        pushed_at = new Date();
+    }
 
     @Override
     public int describeContents() {
@@ -505,8 +510,7 @@ public class Repo extends SugarRecord<Repo> implements Parcelable
         dest.writeDouble(this.score);
     }
 
-    public Repo() {
-    }
+
 
     private Repo(Parcel in) {
         this.id = in.readLong();

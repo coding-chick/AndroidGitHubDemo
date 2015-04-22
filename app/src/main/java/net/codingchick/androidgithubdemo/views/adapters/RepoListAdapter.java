@@ -6,11 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import net.codingchick.androidgithubdemo.R;
 import net.codingchick.androidgithubdemo.model.Repo;
+import net.codingchick.androidgithubdemo.utils.CircleTransform;
 import net.codingchick.androidgithubdemo.views.fragments.GitHubSearchFragment;
 
 import java.text.DateFormat;
@@ -48,7 +52,14 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
         viewHolder.repoNameText.setText(currentRepo.getFullName());
         viewHolder.descriptionText.setText(currentRepo.getDescription());
         DateFormat dateTimeFormatter = DateFormat.getDateTimeInstance();
-        viewHolder.updatedOnText.setText( dateTimeFormatter.format(currentRepo.getUpdatedAt()));
+
+        if (currentRepo.getUpdatedAt() != null){
+            viewHolder.updatedOnText.setText( dateTimeFormatter.format(currentRepo.getUpdatedAt()));
+        }
+
+        if (currentRepo.getOwner() != null && currentRepo.getOwner().getAvatarUrl() != null) {
+            Picasso.with(context).load(currentRepo.getOwner().getAvatarUrl()).transform(new CircleTransform()).into(viewHolder.userImage);
+        }
     }
 
     @Override
@@ -67,12 +78,14 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
         public TextView descriptionText;
         public TextView updatedOnText;
 
+        public ImageView userImage;
 
         public ViewHolder(RelativeLayout view) {
             super(view);
             this.repoNameText = (TextView) view.findViewById(R.id.repo_name_text);
             this.descriptionText = (TextView) view.findViewById(R.id.description);
             this.updatedOnText = (TextView) view.findViewById(R.id.updated_on);
+            this.userImage = (ImageView) view.findViewById(R.id.user_image);
         }
     }
 

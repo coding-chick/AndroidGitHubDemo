@@ -50,10 +50,10 @@ public class GithubDataManager {
                   //  }.execute(reposResult);
                // }
                // else{
-                    List<Repo> prevSearches = Repo.findWithQuery(Repo.class, "Select * from Repo where name LIKE " + "'%" +searchQuery+"%'");
-                    if (prevSearches.size() > 0){
-                        return new ArrayList<Repo>(prevSearches);
-                    }
+//                    List<Repo> prevSearches = Repo.findWithQuery(Repo.class, "Select * from Repo where name LIKE " + "'%" +searchQuery+"%'");
+//                    if (prevSearches.size() > 0){
+//                        return new ArrayList<Repo>(prevSearches);
+//                    }
                // }
                 return reposResult.getItems();
             }
