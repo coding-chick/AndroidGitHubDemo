@@ -13,6 +13,7 @@ import net.codingchick.androidgithubdemo.R;
 import net.codingchick.androidgithubdemo.model.Repo;
 import net.codingchick.androidgithubdemo.views.fragments.GitHubSearchFragment;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 /**
@@ -44,8 +45,10 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
     public void onBindViewHolder(RepoListAdapter.ViewHolder viewHolder, int i) {
         Repo currentRepo = reposDataSet.get(i);
         viewHolder.itemView.setTag(currentRepo);
-        viewHolder.repoNameText.setText(currentRepo.getName());
-
+        viewHolder.repoNameText.setText(currentRepo.getFullName());
+        viewHolder.descriptionText.setText(currentRepo.getDescription());
+        DateFormat dateTimeFormatter = DateFormat.getDateTimeInstance();
+        viewHolder.updatedOnText.setText( dateTimeFormatter.format(currentRepo.getUpdatedAt()));
     }
 
     @Override
@@ -61,9 +64,15 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView repoNameText;
+        public TextView descriptionText;
+        public TextView updatedOnText;
+
+
         public ViewHolder(RelativeLayout view) {
             super(view);
             this.repoNameText = (TextView) view.findViewById(R.id.repo_name_text);
+            this.descriptionText = (TextView) view.findViewById(R.id.description);
+            this.updatedOnText = (TextView) view.findViewById(R.id.updated_on);
         }
     }
 

@@ -3,12 +3,35 @@ package net.codingchick.androidgithubdemo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 
 import java.util.Date;
 
 public class Repo extends SugarRecord<Repo> implements Parcelable
 {
+    public long getRepoId() { return repoId; }
+
+    public void setRepoId(long repoId) { this.repoId = repoId; }
+
+    private long repoId;
+
+    @Override
+    public void setId(Long id) {
+        if (id != null){
+            setRepoId(id);
+        }
+        super.setId(id);
+    }
+
+    @Override
+    public void save() {
+
+        super.save();
+
+    }
+
     private String name;
 
     public String getName() { return this.name; }

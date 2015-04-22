@@ -6,6 +6,7 @@ import net.codingchick.androidgithubdemo.model.Repo;
 import net.codingchick.androidgithubdemo.model.RootObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -27,24 +28,31 @@ public class GithubDataManager {
         new AsyncTask<String, Void, ArrayList<Repo>>() {
             @Override
             protected ArrayList<Repo> doInBackground(String... params) {
-                String searchQuery = params[0];
+                final String searchQuery = params[0];
                 RootObject reposResult = githubService.searchRepos(searchQuery);
 
                 //if (reposResult != null) {
-                    reposResult.setSearchQuery(searchQuery);
 
-                    new AsyncTask<RootObject, Void, Void>() {
-                        @Override
-                        protected Void doInBackground(RootObject... params) {
-                            params[0].save();
-                            return null;
-                        }
-                    }.execute(reposResult);
+                   // new AsyncTask<RootObject, Void, Void>() {
+                      //  @Override
+                      //  protected Void doInBackground(RootObject... params) {
+                            for(Repo currRepo : reposResult.getItems()){
+                                List<Repo> repoInDb = Repo.find(Repo.class, "repo_Id = ?", String.valueOf(currRepo.getRepoId()));
+                                if (repoInDb.size() > 0){
+                                    repoInDb.get(0).delete();
+                                }
+                                currRepo.setRepoId(currRepo.getId());
+                                currRepo.setId(null);
+                                currRepo.save();
+                            }
+                         //   return null;
+                       // }
+                  //  }.execute(reposResult);
                // }
                // else{
-                    List<RootObject> prevSearches = RootObject.find(RootObject.class, "search_query = ?", searchQuery);
+                    List<Repo> prevSearches = Repo.findWithQuery(Repo.class, "Select * from Repo where name LIKE " + "'%" +searchQuery+"%'");
                     if (prevSearches.size() > 0){
-                        prevSearches.get(0).getItems();
+                        return new ArrayList<Repo>(prevSearches);
                     }
                // }
                 return reposResult.getItems();

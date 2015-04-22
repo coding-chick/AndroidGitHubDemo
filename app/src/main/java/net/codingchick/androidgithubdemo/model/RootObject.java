@@ -29,14 +29,4 @@ public class RootObject extends SugarRecord<RootObject>
     public ArrayList<Repo> getItems() { return this.items; }
 
     public void setItems(ArrayList<Repo> items) { this.items = items; }
-
-    private String searchQuery;
-
-    public String getSearchQuery() {
-        return searchQuery;
-    }
-
-    public void setSearchQuery(String searchQuery) {
-        this.searchQuery = searchQuery;
-    }
 }
