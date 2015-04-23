@@ -90,6 +90,7 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
 
     @OnClick(R.id.search_button)
     public void onClick(View v) {
+        hideKeyboard();
         searchRepos();
     }
 
@@ -130,6 +131,18 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
         public void navigateTo(Repo repo);
     }
 
+    public void hideKeyboard(){
+        InputMethodManager imm =
+                (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public void showKeyboard(){
+        InputMethodManager imm =
+                (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(searchText, InputMethodManager.SHOW_IMPLICIT);
+    }
+
     private class SearchOnEditorActionListener implements TextView.OnEditorActionListener {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -138,11 +151,11 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
                     (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 searchRepos();
-                imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                hideKeyboard();
                 handled = true;
             }
             else{
-                imm.showSoftInput(searchText, InputMethodManager.SHOW_IMPLICIT);
+                showKeyboard();
             }
             return handled;
         }
