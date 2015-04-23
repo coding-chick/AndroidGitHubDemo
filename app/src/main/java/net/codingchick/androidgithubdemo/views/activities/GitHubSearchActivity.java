@@ -14,7 +14,6 @@ public class GitHubSearchActivity extends Activity implements GitHubSearchFragme
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String str = savedInstanceState.getString("term")
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_git_hub_search);
 

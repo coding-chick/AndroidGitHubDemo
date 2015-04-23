@@ -148,19 +148,19 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
         }
     }
 
-    private final static String STATE_SEARCH_TERM = "term";
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString(STATE_SEARCH_TERM, searchText.getText() != null ? searchText.getText().toString() : null);
+//    private final static String STATE_SEARCH_TERM = "term";
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        outState.putString(STATE_SEARCH_TERM, searchText.getText() != null ? searchText.getText().toString() : null);
+//
+//        super.onSaveInstanceState(outState);
+//    }
 
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_SEARCH_TERM))
-            searchText.setText(savedInstanceState.getString(STATE_SEARCH_TERM));
-
-        super.onViewStateRestored(savedInstanceState);
-    }
+//    @Override
+//    public void onViewStateRestored(Bundle savedInstanceState) {
+//        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_SEARCH_TERM))
+//            searchText.setText(savedInstanceState.getString(STATE_SEARCH_TERM));
+//
+//        super.onViewStateRestored(savedInstanceState);
+//    }
 }
