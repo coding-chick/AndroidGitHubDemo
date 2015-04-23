@@ -2,7 +2,8 @@
 learning android. playing around with android and github api. 
 
 ##Screenshots
-![Flow Gif](http://i.imgur.com/zWMABR3.gif)
+![Here](https://www.youtube.com/watch?v=k3aFyms3qm0&feature=youtu.be)
+
 
 
 ![Master Page](http://i.imgur.com/vrTIB6z.png)
