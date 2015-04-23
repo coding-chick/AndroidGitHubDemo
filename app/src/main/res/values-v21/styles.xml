@@ -8,5 +8,13 @@
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorControlHighlight">@color/accent</item>
+        <item name="android:colorButtonNormal">@color/primary</item>
+
+
+
+   <!--     <style name="Widget.Material.ImageButton" parent="Widget.ImageButton">
+            <item name="background">@drawable/btn_default_material</item>
+        </style>-->
     </style>
 </resources>

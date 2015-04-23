@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.codingchick.androidgithubdemo.R;
 import net.codingchick.androidgithubdemo.core.GithubDataManager;
@@ -81,6 +82,8 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
         repoListLayoutManager = new LinearLayoutManager(this.getActivity());
         repoRecyclerView.setLayoutManager(repoListLayoutManager);
 
+        onViewStateRestored(savedInstanceState);
+
         getActivity().getActionBar().show();
         return view;
     }
@@ -102,12 +105,18 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
     }
 
     public void searchRepos() {
-        String searchString = searchText.getText().toString();
-        if (spinner.getSelectedItem() != spinner.getItemAtPosition(0)){
-            searchString += "+language:" + spinner.getSelectedItem();
+        if (searchText.getText() != null && !searchText.getText().toString().isEmpty()){
+            String searchString = searchText.getText().toString();
+            if (spinner.getSelectedItem() != spinner.getItemAtPosition(0)){
+                searchString += "+language:" + spinner.getSelectedItem();
+            }
+
+            GithubDataManager.getInstance().searchRepos(searchString, GitHubSearchFragment.this);
+        }
+        else {
+            Toast.makeText(this.getActivity(), "Please enter search query", Toast.LENGTH_SHORT).show();
         }
 
-        GithubDataManager.getInstance().searchRepos(searchString, GitHubSearchFragment.this);
     }
 
     @Override
@@ -137,5 +146,21 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
             }
             return handled;
         }
+    }
+
+    private final static String STATE_SEARCH_TERM = "term";
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(STATE_SEARCH_TERM, searchText.getText() != null ? searchText.getText().toString() : null);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_SEARCH_TERM))
+            searchText.setText(savedInstanceState.getString(STATE_SEARCH_TERM));
+
+        super.onViewStateRestored(savedInstanceState);
     }
 }

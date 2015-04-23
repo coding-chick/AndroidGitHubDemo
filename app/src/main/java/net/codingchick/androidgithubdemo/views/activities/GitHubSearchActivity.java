@@ -1,6 +1,7 @@
 package net.codingchick.androidgithubdemo.views.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 
 import net.codingchick.androidgithubdemo.R;
@@ -13,6 +14,7 @@ public class GitHubSearchActivity extends Activity implements GitHubSearchFragme
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String str = savedInstanceState.getString("term")
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_git_hub_search);
 
@@ -30,6 +32,19 @@ public class GitHubSearchActivity extends Activity implements GitHubSearchFragme
                 .add(R.id.seach_fragment, RepoDetailsFragment.newInstance(repo))
                 .addToBackStack("toDetails")
         .commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.seach_fragment);
+        fragment.onSaveInstanceState(outState);
+
+        getFragmentManager().beginTransaction()
+                .remove( getFragmentManager().findFragmentById(R.id.seach_fragment))
+                .commit();
+
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
