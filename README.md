@@ -1,8 +1,9 @@
 # AndroidGitHubDemo
 learning android. playing around with android and github api. 
 
-##Screenshot
+##Screenshots
 ![Flow Gif](http://i.imgur.com/zWMABR3.gif)
+
 
 ![Master Page](http://i.imgur.com/vrTIB6z.png)
 
