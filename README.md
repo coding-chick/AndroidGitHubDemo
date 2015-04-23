@@ -6,11 +6,11 @@ learning android. playing around with android and github api.
 
 
 
-![Master Page](http://i.imgur.com/vrTIB6z.png)
+![Master Page](http://i.imgur.com/zee0hVX.png)
 
-![Details Page](http://i.imgur.com/aRArPA3.png)
+![Details Page](http://i.imgur.com/nkovjXt.png)
 
-![Tablet](http://i.imgur.com/39o5YMy.png)
+![Tablet](http://i.imgur.com/43gdRUY.png)
 
 ##TODOs:
 * Fix bugs
