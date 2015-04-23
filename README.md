@@ -13,6 +13,8 @@ learning android. playing around with android and github api.
 ![Tablet](http://i.imgur.com/43gdRUY.png)
 
 ##TODOs:
+* Add pagination
+
 * Fix bugs
 
 * Save state and restore state
