@@ -4,11 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Unique;
+
+import java.util.List;
 
 /**
  * Created by Efrat Barak on 4/19/2015.
  */
 public class Owner extends SugarRecord<Owner> implements Parcelable {
+
+    @Unique
+    private long ownerId;
+
     private String login;
 
     public String getLogin() { return this.login; }
@@ -163,4 +170,12 @@ public class Owner extends SugarRecord<Owner> implements Parcelable {
             return new Owner[size];
         }
     };
+
+    public long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(long ownerId) {
+        this.ownerId = ownerId;
+    }
 }

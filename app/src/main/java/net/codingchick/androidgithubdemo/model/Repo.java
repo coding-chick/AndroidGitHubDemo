@@ -6,8 +6,10 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
+import com.orm.dsl.Unique;
 
 import java.util.Date;
+import java.util.List;
 
 public class Repo extends SugarRecord<Repo> implements Parcelable
 {
@@ -15,22 +17,8 @@ public class Repo extends SugarRecord<Repo> implements Parcelable
 
     public void setRepoId(long repoId) { this.repoId = repoId; }
 
+    @Unique
     private long repoId;
-
-    @Override
-    public void setId(Long id) {
-        if (id != null){
-            setRepoId(id);
-        }
-        super.setId(id);
-    }
-
-    @Override
-    public void save() {
-
-        super.save();
-
-    }
 
     private String name;
 

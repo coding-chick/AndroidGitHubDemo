@@ -2,6 +2,7 @@ package net.codingchick.androidgithubdemo.core;
 
 import android.os.AsyncTask;
 
+import net.codingchick.androidgithubdemo.model.Owner;
 import net.codingchick.androidgithubdemo.model.Repo;
 import net.codingchick.androidgithubdemo.model.RootObject;
 
@@ -29,33 +30,29 @@ public class GithubDataManager {
             @Override
             protected ArrayList<Repo> doInBackground(String... params) {
                 final String searchQuery = params[0];
-                RootObject reposResult = githubService.searchRepos(searchQuery);
 
-                //if (reposResult != null) {
+                if (AppConnectivityManager.isConnectedToInternet()){
+                    RootObject reposResult = githubService.searchRepos(searchQuery);
 
-                   // new AsyncTask<RootObject, Void, Void>() {
-                      //  @Override
-                      //  protected Void doInBackground(RootObject... params) {
-                            for(Repo currRepo : reposResult.getItems()){
-                                List<Repo> repoInDb = Repo.find(Repo.class, "repo_Id = ?", String.valueOf(currRepo.getRepoId()));
-                                if (repoInDb.size() > 0){
-                                    repoInDb.get(0).delete();
-                                }
-                                currRepo.setRepoId(currRepo.getId());
-                                currRepo.setId(null);
-                                currRepo.save();
-                            }
-                         //   return null;
-                       // }
-                  //  }.execute(reposResult);
-               // }
-               // else{
-//                    List<Repo> prevSearches = Repo.findWithQuery(Repo.class, "Select * from Repo where name LIKE " + "'%" +searchQuery+"%'");
-//                    if (prevSearches.size() > 0){
-//                        return new ArrayList<Repo>(prevSearches);
-//                    }
-               // }
-                return reposResult.getItems();
+                    if (reposResult != null) {
+                        for(Repo currRepo : reposResult.getItems()){
+                            currRepo.getOwner().setOwnerId(currRepo.getOwner().getId());
+                            currRepo.getOwner().setId(null);
+                            currRepo.getOwner().save();
+
+                            currRepo.setRepoId(currRepo.getId());
+                            currRepo.setId(null);
+                            currRepo.save();
+                        }
+                    }
+
+                    return reposResult.getItems();
+                }
+                else{
+                    List<Repo> prevSearches = Repo.findWithQuery(Repo.class, "Select * from Repo where name LIKE " + "'%" +searchQuery+"%'");
+                    return new ArrayList<Repo>(prevSearches);
+                }
+
             }
 
             @Override

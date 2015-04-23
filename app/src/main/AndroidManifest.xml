@@ -3,12 +3,13 @@
     package="net.codingchick.androidgithubdemo" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name="com.orm.SugarApp">
+        android:name="net.codingchick.androidgithubdemo.core.AndroidGitHubDemoApplication">
 
         <activity
             android:name=".views.activities.GitHubSearchActivity"
@@ -19,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="DATABASE" android:value="repos_search7.db" />
+        <meta-data android:name="DATABASE" android:value="repos_search10.db" />
         <meta-data android:name="VERSION" android:value="1" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="net.codingchick.androidgithubdemo" />

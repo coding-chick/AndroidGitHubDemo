@@ -32,6 +32,13 @@ public class RepoDetailsFragment extends Fragment {
     private Repo repo;
     private ImageView avatarImageView;
     private TextView repoFullNameText;
+    private TextView detailsDescription;
+    private TextView repoLink;
+    private TextView forkText;
+    private TextView watchersText;
+ //   private TextView repoFullNameText;
+//    private TextView repoFullNameText;
+
     private TextView starText;
     private TextView ownerName;
 
@@ -67,24 +74,34 @@ public class RepoDetailsFragment extends Fragment {
         Point size = new Point();
         display.getSize(size);
 
-        avatarImageView.setLayoutParams(new RelativeLayout.LayoutParams(size.x, size.x));
+        //avatarImageView.setLayoutParams(new RelativeLayout.LayoutParams(size.x, size.x));
         Picasso.with(getActivity())
                 .load(repo.getOwner().getAvatarUrl())
-                .fit()
-                .centerCrop()
+                .transform(new CircleTransform())
+//                .fit()
+//                .centerCrop()
                 .into(avatarImageView);
 
         repoFullNameText = (TextView) view.findViewById(R.id.repo_full_name_text);
         repoFullNameText.setText(repo.getFullName());
 
+        detailsDescription = (TextView) view.findViewById(R.id.details_description);
+        detailsDescription.setText(repo.getDescription());
+
         starText = (TextView) view.findViewById(R.id.star_text);
         starText.setText(String.valueOf(repo.getStargazersCount()));
 
-        ownerName = (TextView) view.findViewById(R.id.owner_name);
-        ownerName.setClickable(true);
-        ownerName.setMovementMethod(LinkMovementMethod.getInstance());
-        String text = String.format("<a href='%s'> %s </a>", repo.getOwner().getHtmlUrl(), repo.getOwner().getLogin());
-        ownerName.setText(Html.fromHtml(text));
+        forkText = (TextView) view.findViewById(R.id.fork_text);
+        forkText.setText(String.valueOf(repo.getForksCount()));
+
+        watchersText = (TextView) view.findViewById(R.id.watchers_text);
+        watchersText.setText(String.valueOf(repo.getWatchersCount()));
+
+        repoLink = (TextView) view.findViewById(R.id.repo_link);
+        repoLink.setClickable(true);
+        repoLink.setMovementMethod(LinkMovementMethod.getInstance());
+        String text = String.format("<a href='%s'> %s </a>", repo.getUrl(), repo.getUrl());
+        repoLink.setText(Html.fromHtml(text));
 
         return view;
     }

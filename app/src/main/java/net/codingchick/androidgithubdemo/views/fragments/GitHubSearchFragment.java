@@ -32,6 +32,7 @@ import java.util.ArrayList;
  */
 public class GitHubSearchFragment extends Fragment implements GithubDataManager.SearchReposCallback {
 
+    private Spinner spinner;
     private ImageButton searchButton;
     private EditText searchText;
     private RecyclerView repoRecyclerView;
@@ -52,8 +53,8 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_git_hub_search, container, false);
-        // Inflate the layout for this fragment
-        Spinner spinner = (Spinner) view.findViewById(R.id.filter_language);
+        spinner = (Spinner) view.findViewById(R.id.filter_language);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
                 R.array.languages_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -96,6 +97,10 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
 
     public void searchRepos() {
         String searchString = searchText.getText().toString();
+        if (spinner.getSelectedItem() != spinner.getItemAtPosition(0)){
+            searchString += "+language:" + spinner.getSelectedItem();
+        }
+
         GithubDataManager.getInstance().searchRepos(searchString, GitHubSearchFragment.this);
     }
 
