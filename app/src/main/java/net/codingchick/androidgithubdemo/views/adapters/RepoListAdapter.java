@@ -20,6 +20,9 @@ import net.codingchick.androidgithubdemo.views.fragments.GitHubSearchFragment;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by Efrat Barak on 4/19/2015.
  */
@@ -74,18 +77,15 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView repoNameText;
-        public TextView descriptionText;
-        public TextView updatedOnText;
+        @InjectView(R.id.repo_name_text)public TextView repoNameText;
+        @InjectView(R.id.description)public TextView descriptionText;
+        @InjectView(R.id.updated_on)public TextView updatedOnText;
 
-        public ImageView userImage;
+        @InjectView(R.id.user_image)public ImageView userImage;
 
         public ViewHolder(RelativeLayout view) {
             super(view);
-            this.repoNameText = (TextView) view.findViewById(R.id.repo_name_text);
-            this.descriptionText = (TextView) view.findViewById(R.id.description);
-            this.updatedOnText = (TextView) view.findViewById(R.id.updated_on);
-            this.userImage = (ImageView) view.findViewById(R.id.user_image);
+            ButterKnife.inject(this, view);
         }
     }
 

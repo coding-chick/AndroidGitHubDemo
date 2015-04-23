@@ -27,18 +27,23 @@ import net.codingchick.androidgithubdemo.views.adapters.RepoListAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class GitHubSearchFragment extends Fragment implements GithubDataManager.SearchReposCallback {
 
-    private Spinner spinner;
-    private ImageButton searchButton;
-    private EditText searchText;
-    private RecyclerView repoRecyclerView;
-    private RepoListAdapter repoListAdapter;
-    private RecyclerView.LayoutManager repoListLayoutManager;
-    private SearchFragmentManager searchFragmentManager;
+    @InjectView(R.id.filter_language) Spinner spinner;
+    @InjectView(R.id.search_button) ImageButton searchButton;
+    @InjectView(R.id.search_text) EditText searchText;
+    @InjectView(R.id.repos_recycler_view) RecyclerView repoRecyclerView;
+
+    RepoListAdapter repoListAdapter;
+    RecyclerView.LayoutManager repoListLayoutManager;
+    SearchFragmentManager searchFragmentManager;
 
     public GitHubSearchFragment() {
     }
@@ -53,6 +58,9 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_git_hub_search, container, false);
+
+        ButterKnife.inject(this, view);
+
         spinner = (Spinner) view.findViewById(R.id.filter_language);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
@@ -60,7 +68,6 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        searchText = (EditText) view.findViewById(R.id.search_text);
         searchText.setOnEditorActionListener(new SearchOnEditorActionListener());
         searchText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -69,10 +76,6 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
             }
         });
 
-        searchButton = (ImageButton) view.findViewById(R.id.search_button);
-        searchButton.setOnClickListener(new SearchClickedListener());
-
-        repoRecyclerView = (RecyclerView) view.findViewById(R.id.repos_recycler_view);
         repoRecyclerView.setHasFixedSize(true);
 
         repoListLayoutManager = new LinearLayoutManager(this.getActivity());
@@ -82,7 +85,10 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
         return view;
     }
 
-
+    @OnClick(R.id.search_button)
+    public void onClick(View v) {
+        searchRepos();
+    }
 
     public static GitHubSearchFragment newInstance(){
         return new GitHubSearchFragment();

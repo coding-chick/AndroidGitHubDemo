@@ -17,13 +17,15 @@
         android:layout_toLeftOf="@+id/search_button"
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
-        android:layout_height="wrap_content"></Spinner>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"></Spinner>
     <ImageButton
         android:layout_width="30dip"
         android:layout_height="wrap_content"
         android:id="@+id/search_button"
         android:src="@android:drawable/ic_menu_search"
-        android:background="@color/accent" android:layout_alignParentRight="true" />
+        android:background="@color/accent" android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"/>
 
 
 
