@@ -108,11 +108,13 @@ public class GitHubSearchFragment extends Fragment implements GithubDataManager.
     public void searchRepos() {
         if (searchText.getText() != null && !searchText.getText().toString().isEmpty()){
             String searchString = searchText.getText().toString();
+            String languageString = null;
             if (spinner.getSelectedItem() != spinner.getItemAtPosition(0)){
-                searchString += "+language:" + spinner.getSelectedItem();
+                languageString = spinner.getSelectedItem().toString();
+                //searchString += "+language:" + spinner.getSelectedItem();
             }
 
-            GithubDataManager.getInstance().searchRepos(searchString, GitHubSearchFragment.this);
+            GithubDataManager.getInstance().searchRepos(searchString, languageString, GitHubSearchFragment.this);
         }
         else {
             Toast.makeText(this.getActivity(), "Please enter search query", Toast.LENGTH_SHORT).show();

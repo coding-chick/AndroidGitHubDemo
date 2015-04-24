@@ -25,14 +25,20 @@ public class GithubDataManager {
                 .create(GithubService.class);
     }
 
-    public void searchRepos(String searchString, final SearchReposCallback callback) {
+    public void searchRepos(String searchString, String languageString,  final SearchReposCallback callback) {
         new AsyncTask<String, Void, ArrayList<Repo>>() {
             @Override
             protected ArrayList<Repo> doInBackground(String... params) {
                 final String searchQuery = params[0];
+                final String languageFilter = params[1];
 
                 if (AppConnectivityManager.isConnectedToInternet()){
-                    RootObject reposResult = githubService.searchRepos(searchQuery);
+                    String fullSearch = searchQuery;
+                    if (languageFilter != null){
+                        fullSearch += "+language:" + languageFilter;
+                    }
+
+                    RootObject reposResult = githubService.searchRepos(fullSearch);
 
                     if (reposResult != null) {
                         for(Repo currRepo : reposResult.getItems()){
@@ -49,7 +55,12 @@ public class GithubDataManager {
                     return reposResult.getItems();
                 }
                 else{
-                    List<Repo> prevSearches = Repo.findWithQuery(Repo.class, "Select * from Repo where name LIKE " + "'%" +searchQuery+"%'");
+                    String fullQuery = String.format("Select * from Repo where name LIKE '%%%s%%'", searchQuery);
+                    if (languageFilter != null){
+                        fullQuery += String.format(" AND language = '%s'", languageFilter);
+                    }
+
+                    List<Repo> prevSearches = Repo.findWithQuery(Repo.class, fullQuery);
                     return new ArrayList<Repo>(prevSearches);
                 }
 
@@ -59,7 +70,8 @@ public class GithubDataManager {
             protected void onPostExecute(ArrayList<Repo> repos) {
                 callback.onResult(repos);
             }
-        }.execute(searchString);
+
+        }.execute(searchString, languageString);
 
     }
 
